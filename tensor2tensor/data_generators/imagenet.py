@@ -354,6 +354,30 @@ class ImageImagenet64GenFlat(ImageImagenet64Gen):
     p = defaults
     p.modality["inputs"] = modalities.ModalityType.SYMBOL_WEIGHTS_ALL
     p.input_space_id = problem.SpaceID.GENERIC
+    
+@registry.register_problem
+class ImageImagenet32GenFlat(ImageImagenet32Gen):
+  """Imagenet 32 from the pixen cnn paper, as a flat array."""
+
+  def dataset_filename(self):
+    return "image_imagenet32_gen"  # Reuse data.
+
+  def preprocess_example(self, example, mode, unused_hparams):
+    example["inputs"].set_shape(
+        [_IMAGENET_SMALL_IMAGE_SIZE, _IMAGENET_SMALL_IMAGE_SIZE, 3])
+    example["inputs"] = tf.to_int64(example["inputs"])
+    example["inputs"] = tf.reshape(example["inputs"], (-1,))
+
+    del example["targets"]  # Ensure unconditional generation
+
+    return example
+
+  def hparams(self, defaults, model_hparams):
+    super().hparams(defaults, model_hparams)
+    # Switch to symbol modality
+    p = defaults
+    p.modality["inputs"] = modalities.ModalityType.SYMBOL_WEIGHTS_ALL
+    p.input_space_id = problem.SpaceID.GENERIC
 
 
 @registry.register_problem
