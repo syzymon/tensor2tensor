@@ -87,7 +87,7 @@ def imagenet_pixelrnn_generator(tmp_dir,
   width = size
   const_label = 0
   for filename in image_files:
-    with tf.gfile.Open(filename, "r") as f:
+    with tf.gfile.Open(filename, "rb") as f:
       encoded_image = f.read()
       yield {
           "image/encoded": [encoded_image],
