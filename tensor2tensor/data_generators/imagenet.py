@@ -264,6 +264,10 @@ class ImageImagenet64Gen(ImageImagenet):
     return 10
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1):
+    import resource
+    low, high = resource.getrlimit(resource.RLIMIT_NOFILE)
+    resource.setrlimit(resource.RLIMIT_NOFILE, (high, high))
+    
     generator_utils.generate_dataset_and_shuffle(
         self.generator(data_dir, tmp_dir, True),
         self.training_filepaths(data_dir, self.train_shards, shuffled=True),
