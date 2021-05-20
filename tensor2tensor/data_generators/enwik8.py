@@ -126,3 +126,27 @@ class Enwik8L65k(text_problems.Text2SelfProblem):
     for sample in generator:
       sample["targets"] = vocab.encode(sample["targets"])
       yield sample
+
+@registry.register_problem
+class Enwik8L8k(Enwik8L65k):
+  
+  @property
+  def sequence_length(self):
+    """Length of each example (in tokens)."""
+    return 8192
+  
+@registry.register_problem
+class Enwik8L4k(Enwik8L65k):
+  
+  @property
+  def sequence_length(self):
+    """Length of each example (in tokens)."""
+    return 4096
+  
+@registry.register_problem
+class Enwik8L2k(Enwik8L65k):
+  
+  @property
+  def sequence_length(self):
+    """Length of each example (in tokens)."""
+    return 2048
