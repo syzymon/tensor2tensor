@@ -92,7 +92,7 @@ class Enwik8L65k(text_problems.Text2SelfProblem):
 
   def generate_samples(self, data_dir, tmp_dir, dataset_split):
     filepath = _maybe_download_corpus(tmp_dir)
-    with tf.io.gfile.GFile(filepath) as f:
+    with tf.io.gfile.GFile(filepath, mode="rb") as f:
       data = f.read()
 
     tf.logging.info("Length of enwik8 = %d", len(data))
