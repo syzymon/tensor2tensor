@@ -121,11 +121,7 @@ class Enwik8L65k(text_problems.Text2SelfProblem):
         yield {"targets": part[start:start+self.sequence_length]}
 
   def generate_encoded_samples(self, data_dir, tmp_dir, dataset_split):
-    generator = self.generate_samples(data_dir, tmp_dir, dataset_split)
-    vocab = self.get_or_create_vocab(data_dir, tmp_dir)
-    for sample in generator:
-      sample["targets"] = vocab.encode(sample["targets"])
-      yield sample
+    return self.generate_samples(data_dir, tmp_dir, dataset_split)
 
 @registry.register_problem
 class Enwik8L8k(Enwik8L65k):
