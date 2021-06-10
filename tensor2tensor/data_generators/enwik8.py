@@ -146,3 +146,19 @@ class Enwik8L2k(Enwik8L65k):
   def sequence_length(self):
     """Length of each example (in tokens)."""
     return 2048
+  
+@registry.register_problem
+class Enwik8L1k(Enwik8L65k):
+  
+  @property
+  def sequence_length(self):
+    """Length of each example (in tokens)."""
+    return 1024
+
+@registry.register_problem
+class Enwik8L512(Enwik8L65k):
+  
+  @property
+  def sequence_length(self):
+    """Length of each example (in tokens)."""
+    return 512
